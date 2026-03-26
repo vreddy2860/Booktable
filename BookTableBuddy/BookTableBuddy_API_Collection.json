@@ -1,0 +1,877 @@
+{
+    "info": {
+      "_postman_id": "5e8a0f69-9bd3-4f14-9c15-28e6a4c6c9b2",
+      "name": "BookTableBuddy API",
+      "description": "API collection for testing BookTableBuddy backend endpoints",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+      {
+        "name": "Authentication",
+        "item": [
+          {
+            "name": "Register User",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n    \"username\": \"customer_test\",\n    \"email\": \"customer@example.com\",\n    \"password\": \"password123\",\n    \"first_name\": \"Test\",\n    \"last_name\": \"Customer\",\n    \"phone_number\": \"1234567890\",\n    \"user_type\": \"customer\"\n}"
+              },
+              "url": {
+                "raw": "http://18.227.161.27/api/auth/register/",
+                "protocol": "http",
+                "host": ["18.227.161.27"],
+                "path": ["api", "auth", "register", ""]
+              },
+              "description": "Register a new customer user"
+            },
+            "response": []
+          },
+          {
+            "name": "Register Restaurant Manager",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n    \"username\": \"manager_test\",\n    \"email\": \"manager@example.com\",\n    \"password\": \"password123\",\n    \"first_name\": \"Test\",\n    \"last_name\": \"Manager\",\n    \"phone_number\": \"2345678901\",\n    \"user_type\": \"restaurant_manager\"\n}"
+              },
+              "url": {
+                "raw": "http://18.227.161.27/api/auth/register/",
+                "protocol": "http",
+                "host": ["18.227.161.27"],
+                "path": ["api", "auth", "register", ""]
+              },
+              "description": "Register a new restaurant manager user"
+            },
+            "response": []
+          },
+          {
+            "name": "Login",
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "exec": [
+                    "var jsonData = JSON.parse(responseBody);",
+                    "pm.environment.set(\"access_token\", jsonData.access);",
+                    "pm.environment.set(\"refresh_token\", jsonData.refresh);"
+                  ],
+                  "type": "text/javascript"
+                }
+              }
+            ],
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n    \"username\": \"{{username}}\",\n    \"password\": \"{{password}}\"\n}"
+              },
+              "url": {
+                "raw": "http://18.227.161.27/api/auth/token/",
+                "protocol": "http",
+                "host": ["18.227.161.27"],
+                "path": ["api", "auth", "token", ""]
+              },
+              "description": "Login and get JWT token"
+            },
+            "response": []
+          },
+          {
+            "name": "Refresh Token",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n    \"refresh\": \"{{refresh_token}}\"\n}"
+              },
+              "url": {
+                "raw": "http://18.227.161.27/api/auth/token/refresh/",
+                "protocol": "http",
+                "host": ["18.227.161.27"],
+                "path": ["api", "auth", "token", "refresh", ""]
+              },
+              "description": "Refresh JWT token"
+            },
+            "response": []
+          },
+          {
+            "name": "Get User Profile",
+            "request": {
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{access_token}}"
+                }
+              ],
+              "url": {
+                "raw": "http://18.227.161.27/api/auth/profile/",
+                "protocol": "http",
+                "host": ["18.227.161.27"],
+                "path": ["api", "auth", "profile", ""]
+              },
+              "description": "Get the current user's profile"
+            },
+            "response": []
+          }
+        ],
+        "description": "Authentication endpoints for login, registration and token management"
+      },
+      {
+        "name": "Customer",
+        "item": [
+          {
+            "name": "List Bookings",
+            "request": {
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{access_token}}"
+                }
+              ],
+              "url": {
+                "raw": "http://18.227.161.27/api/bookings/customer/",
+                "protocol": "http",
+                "host": ["18.227.161.27"],
+                "path": ["api", "bookings", "customer", ""]
+              },
+              "description": "Get all bookings for the current customer"
+            },
+            "response": []
+          },
+          {
+            "name": "Create Booking",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{access_token}}"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n    \"restaurant\": 1,\n    \"date\": \"2025-05-10\",\n    \"time\": \"19:00\",\n    \"party_size\": 2,\n    \"special_requests\": \"Window seat if possible\"\n}"
+              },
+              "url": {
+                "raw": "http://18.227.161.27/api/bookings/create/",
+                "protocol": "http",
+                "host": ["18.227.161.27"],
+                "path": ["api", "bookings", "create", ""]
+              },
+              "description": "Create a new booking"
+            },
+            "response": []
+          },
+          {
+            "name": "Cancel Booking",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{access_token}}"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{}"
+              },
+              "url": {
+                "raw": "http://18.227.161.27/api/bookings/1/cancel/",
+                "protocol": "http",
+                "host": ["18.227.161.27"],
+                "path": ["api", "bookings", "1", "cancel", ""]
+              },
+              "description": "Cancel an existing booking"
+            },
+            "response": []
+          },
+          {
+            "name": "Create Review",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{access_token}}"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n    \"restaurant\": 1,\n    \"rating\": 5,\n    \"comment\": \"Excellent food and service!\"\n}"
+              },
+              "url": {
+                "raw": "http://18.227.161.27/api/reviews/create/",
+                "protocol": "http",
+                "host": ["18.227.161.27"],
+                "path": ["api", "reviews", "create", ""]
+              },
+              "description": "Create a review for a restaurant"
+            },
+            "response": []
+          },
+          {
+            "name": "Get Favorites",
+            "request": {
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{access_token}}"
+                }
+              ],
+              "url": {
+                "raw": "http://18.227.161.27/api/favorites/",
+                "protocol": "http",
+                "host": ["18.227.161.27"],
+                "path": ["api", "favorites", ""]
+              },
+              "description": "Get user's favorite restaurants"
+            },
+            "response": []
+          },
+          {
+            "name": "Add to Favorites",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{access_token}}"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n    \"restaurant_id\": 1\n}"
+              },
+              "url": {
+                "raw": "http://18.227.161.27/api/favorites/add/",
+                "protocol": "http",
+                "host": ["18.227.161.27"],
+                "path": ["api", "favorites", "add", ""]
+              },
+              "description": "Add a restaurant to favorites"
+            },
+            "response": []
+          },
+          {
+            "name": "Remove from Favorites",
+            "request": {
+              "method": "DELETE",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{access_token}}"
+                }
+              ],
+              "url": {
+                "raw": "http://18.227.161.27/api/favorites/remove/1/",
+                "protocol": "http",
+                "host": ["18.227.161.27"],
+                "path": ["api", "favorites", "remove", "1", ""]
+              },
+              "description": "Remove a restaurant from favorites"
+            },
+            "response": []
+          }
+        ],
+        "description": "Customer-specific operations"
+      },
+      {
+        "name": "Restaurant Manager",
+        "item": [
+          {
+            "name": "Restaurant Profile",
+            "request": {
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{access_token}}"
+                }
+              ],
+              "url": {
+                "raw": "http://18.227.161.27/api/restaurants/manager/profile/",
+                "protocol": "http",
+                "host": ["18.227.161.27"],
+                "path": ["api", "restaurants", "manager", "profile", ""]
+              },
+              "description": "Get restaurant profile for the current manager"
+            },
+            "response": []
+          },
+          {
+            "name": "Create Restaurant",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{access_token}}"
+                }
+              ],
+              "body": {
+                "mode": "formdata",
+                "formdata": [
+                  {
+                    "key": "name",
+                    "value": "Test Restaurant",
+                    "type": "text"
+                  },
+                  {
+                    "key": "description",
+                    "value": "A test restaurant for API testing",
+                    "type": "text"
+                  },
+                  {
+                    "key": "address",
+                    "value": "123 Test St",
+                    "type": "text"
+                  },
+                  {
+                    "key": "city",
+                    "value": "New York",
+                    "type": "text"
+                  },
+                  {
+                    "key": "state",
+                    "value": "NY",
+                    "type": "text"
+                  },
+                  {
+                    "key": "zip_code",
+                    "value": "10001",
+                    "type": "text"
+                  },
+                  {
+                    "key": "cuisine",
+                    "value": "[1]",
+                    "type": "text"
+                  },
+                  {
+                    "key": "cost_rating",
+                    "value": "2",
+                    "type": "text"
+                  },
+                  {
+                    "key": "primary_photo",
+                    "type": "file",
+                    "src": "/path/to/sample_image.jpg"
+                  }
+                ]
+              },
+              "url": {
+                "raw": "http://18.227.161.27/api/restaurants/create/",
+                "protocol": "http",
+                "host": ["18.227.161.27"],
+                "path": ["api", "restaurants", "create", ""]
+              },
+              "description": "Create a new restaurant (for new restaurant managers)"
+            },
+            "response": []
+          },
+          {
+            "name": "Update Restaurant",
+            "request": {
+              "method": "PUT",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{access_token}}"
+                }
+              ],
+              "body": {
+                "mode": "formdata",
+                "formdata": [
+                  {
+                    "key": "name",
+                    "value": "Updated Test Restaurant",
+                    "type": "text"
+                  },
+                  {
+                    "key": "description",
+                    "value": "An updated test restaurant for API testing",
+                    "type": "text"
+                  },
+                  {
+                    "key": "cost_rating",
+                    "value": "3",
+                    "type": "text"
+                  }
+                ]
+              },
+              "url": {
+                "raw": "http://18.227.161.27/api/restaurants/1/update/",
+                "protocol": "http",
+                "host": ["18.227.161.27"],
+                "path": ["api", "restaurants", "1", "update", ""]
+              },
+              "description": "Update restaurant details"
+            },
+            "response": []
+          },
+          {
+            "name": "List Restaurant Bookings",
+            "request": {
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{access_token}}"
+                }
+              ],
+              "url": {
+                "raw": "http://18.227.161.27/api/bookings/restaurant/",
+                "protocol": "http",
+                "host": ["18.227.161.27"],
+                "path": ["api", "bookings", "restaurant", ""]
+              },
+              "description": "Get all bookings for the manager's restaurant"
+            },
+            "response": []
+          },
+          {
+            "name": "Approve Booking",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{access_token}}"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{}"
+              },
+              "url": {
+                "raw": "http://18.227.161.27/api/bookings/1/approve/",
+                "protocol": "http",
+                "host": ["18.227.161.27"],
+                "path": ["api", "bookings", "1", "approve", ""]
+              },
+              "description": "Approve a pending booking"
+            },
+            "response": []
+          },
+          {
+            "name": "Reject Booking",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{access_token}}"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n    \"rejection_reason\": \"Fully booked for this time slot\"\n}"
+              },
+              "url": {
+                "raw": "http://18.227.161.27/api/bookings/1/reject/",
+                "protocol": "http",
+                "host": ["18.227.161.27"],
+                "path": ["api", "bookings", "1", "reject", ""]
+              },
+              "description": "Reject a pending booking"
+            },
+            "response": []
+          },
+          {
+            "name": "Upload Photo",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{access_token}}"
+                }
+              ],
+              "body": {
+                "mode": "formdata",
+                "formdata": [
+                  {
+                    "key": "image",
+                    "type": "file",
+                    "src": "/path/to/restaurant_image.jpg"
+                  },
+                  {
+                    "key": "caption",
+                    "value": "Interior view",
+                    "type": "text"
+                  },
+                  {
+                    "key": "is_primary",
+                    "value": "false",
+                    "type": "text"
+                  }
+                ]
+              },
+              "url": {
+                "raw": "http://18.227.161.27/api/restaurants/photos/add/",
+                "protocol": "http",
+                "host": ["18.227.161.27"],
+                "path": ["api", "restaurants", "photos", "add", ""]
+              },
+              "description": "Upload a new restaurant photo"
+            },
+            "response": []
+          }
+        ],
+        "description": "Restaurant manager-specific operations"
+      },
+      {
+        "name": "Admin",
+        "item": [
+          {
+            "name": "List All Users",
+            "request": {
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{access_token}}"
+                }
+              ],
+              "url": {
+                "raw": "http://18.227.161.27/api/admin/users/",
+                "protocol": "http",
+                "host": ["18.227.161.27"],
+                "path": ["api", "admin", "users", ""]
+              },
+              "description": "Get all users (admin only)"
+            },
+            "response": []
+          },
+          {
+            "name": "Approve Restaurant",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{access_token}}"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{}"
+              },
+              "url": {
+                "raw": "http://18.227.161.27/api/admin/restaurants/1/approve/",
+                "protocol": "http",
+                "host": ["18.227.161.27"],
+                "path": ["api", "admin", "restaurants", "1", "approve", ""]
+              },
+              "description": "Approve a restaurant (admin only)"
+            },
+            "response": []
+          },
+          {
+            "name": "Reject Restaurant",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{access_token}}"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n    \"rejection_reason\": \"Invalid information provided\"\n}"
+              },
+              "url": {
+                "raw": "http://18.227.161.27/api/admin/restaurants/1/reject/",
+                "protocol": "http",
+                "host": ["18.227.161.27"],
+                "path": ["api", "admin", "restaurants", "1", "reject", ""]
+              },
+              "description": "Reject a restaurant (admin only)"
+            },
+            "response": []
+          },
+          {
+            "name": "List All Bookings",
+            "request": {
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{access_token}}"
+                }
+              ],
+              "url": {
+                "raw": "http://18.227.161.27/api/admin/bookings/",
+                "protocol": "http",
+                "host": ["18.227.161.27"],
+                "path": ["api", "admin", "bookings", ""]
+              },
+              "description": "Get all bookings across the platform (admin only)"
+            },
+            "response": []
+          },
+          {
+            "name": "Manage Cuisine Types",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{access_token}}"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n    \"name\": \"Mediterranean\"\n}"
+              },
+              "url": {
+                "raw": "http://18.227.161.27/api/admin/cuisines/add/",
+                "protocol": "http",
+                "host": ["18.227.161.27"],
+                "path": ["api", "admin", "cuisines", "add", ""]
+              },
+              "description": "Add a new cuisine type (admin only)"
+            },
+            "response": []
+          }
+        ],
+        "description": "Admin-specific operations"
+      },
+      {
+        "name": "Public Endpoints",
+        "item": [
+          {
+            "name": "List Restaurants",
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "http://18.227.161.27/api/restaurants/",
+                "protocol": "http",
+                "host": ["18.227.161.27"],
+                "path": ["api", "restaurants", ""]
+              },
+              "description": "Get all approved restaurants"
+            },
+            "response": []
+          },
+          {
+            "name": "Restaurant Details",
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "http://18.227.161.27/api/restaurants/1/",
+                "protocol": "http",
+                "host": ["18.227.161.27"],
+                "path": ["api", "restaurants", "1", ""]
+              },
+              "description": "Get details for a specific restaurant"
+            },
+            "response": []
+          },
+          {
+            "name": "Search Restaurants",
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "http://18.227.161.27/api/restaurants/search/?q=Indian",
+                "protocol": "http",
+                "host": ["18.227.161.27"],
+                "path": ["api", "restaurants", "search", ""],
+                "query": [
+                  {
+                    "key": "q",
+                    "value": "Indian"
+                  }
+                ]
+              },
+              "description": "Search for restaurants by name, description, or cuisine"
+            },
+            "response": []
+          },
+          {
+            "name": "Flexible Search",
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "http://18.227.161.27/api/restaurants/flexible-search/?date=2025-05-10&time=19:00&party_size=2&location=NY&cuisine=",
+                "protocol": "http",
+                "host": ["18.227.161.27"],
+                "path": ["api", "restaurants", "flexible-search", ""],
+                "query": [
+                  {
+                    "key": "date",
+                    "value": "2025-05-10"
+                  },
+                  {
+                    "key": "time",
+                    "value": "19:00"
+                  },
+                  {
+                    "key": "party_size",
+                    "value": "2"
+                  },
+                  {
+                    "key": "location",
+                    "value": "NY"
+                  },
+                  {
+                    "key": "cuisine",
+                    "value": ""
+                  }
+                ]
+              },
+              "description": "Search for restaurants with available tables based on criteria"
+            },
+            "response": []
+          },
+          {
+            "name": "Get Restaurant Reviews",
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "http://18.227.161.27/api/reviews/restaurant/1/",
+                "protocol": "http",
+                "host": ["18.227.161.27"],
+                "path": ["api", "reviews", "restaurant", "1", ""]
+              },
+              "description": "Get all reviews for a specific restaurant"
+            },
+            "response": []
+          },
+          {
+            "name": "List Cuisines",
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "http://18.227.161.27/api/cuisines/",
+                "protocol": "http",
+                "host": ["18.227.161.27"],
+                "path": ["api", "cuisines", ""]
+              },
+              "description": "Get all cuisine types"
+            },
+            "response": []
+          },
+          {
+            "name": "Check Availability",
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "http://18.227.161.27/api/restaurants/1/availability/?date=2025-05-10&party_size=2",
+                "protocol": "http",
+                "host": ["18.227.161.27"],
+                "path": ["api", "restaurants", "1", "availability", ""],
+                "query": [
+                  {
+                    "key": "date",
+                    "value": "2025-05-10"
+                  },
+                  {
+                    "key": "party_size",
+                    "value": "2"
+                  }
+                ]
+              },
+              "description": "Check available time slots for a restaurant on a specific date"
+            },
+            "response": []
+          }
+        ],
+        "description": "Public endpoints that don't require authentication"
+      }
+    ],
+    "event": [
+      {
+        "listen": "prerequest",
+        "script": {
+          "type": "text/javascript",
+          "exec": [""]
+        }
+      },
+      {
+        "listen": "test",
+        "script": {
+          "type": "text/javascript",
+          "exec": [""]
+        }
+      }
+    ],
+    "variable": [
+      {
+        "key": "base_url",
+        "value": "http://18.227.161.27/api",
+        "type": "string"
+      }
+    ]
+  }

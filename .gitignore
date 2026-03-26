@@ -1,0 +1,87 @@
+# Django #
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3-journal
+
+# ALLOW database files for migration
+# db.sqlite3
+
+# ALLOW media files for restaurant photos
+# media/
+
+# If your virtualenv is in the project
+venv/
+env/
+ENV/
+BookTableBuddy/venv/
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+
+# PyCharm #
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/dictionaries
+.idea/**/dataSources/
+.idea/**/dataSources.ids
+.idea/**/dataSources.xml
+.idea/**/dataSources.local.xml
+.idea/**/sqlDataSources.xml
+.idea/**/dynamic.xml
+.idea/**/uiDesigner.xml
+.idea/**/gradle.xml
+.idea/**/libraries
+*.iws /out/
+
+# React / Node.js #
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Environment files contain sensitive information and should never be committed
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+
+# Mac OS #
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# VS Code #
+.vscode/
+
+# Keep test files for reference
+# test_*.py

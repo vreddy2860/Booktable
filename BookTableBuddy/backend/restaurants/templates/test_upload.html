@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test File Upload</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; }
+        button { padding: 10px 15px; background: #4CAF50; color: white; border: none; cursor: pointer; }
+        #response { margin-top: 20px; padding: 10px; background: #f5f5f5; border-radius: 5px; white-space: pre-wrap; }
+        .success { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Test File Upload</h1>
+    <p>Use this form to test uploading images to the server.</p>
+    
+    <form id="uploadForm" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="test_image">Select an image:</label>
+            <input type="file" id="test_image" name="test_image" accept="image/*" required>
+        </div>
+        <button type="submit">Upload Image</button>
+    </form>
+    
+    <div id="response"></div>
+    
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const responseDiv = document.getElementById('response');
+            
+            try {
+                responseDiv.innerHTML = 'Uploading...';
+                responseDiv.className = '';
+                
+                const response = await fetch('/api/restaurants/test-upload/', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    responseDiv.className = 'success';
+                    responseDiv.innerHTML = `<strong>Success!</strong><br>`;
+                    responseDiv.innerHTML += `File uploaded to: ${result.path}<br>`;
+                    responseDiv.innerHTML += `URL: <a href="${result.url}" target="_blank">${result.url}</a><br>`;
+                    responseDiv.innerHTML += `File exists: ${result.file_exists}<br>`;
+                    responseDiv.innerHTML += `File size: ${result.file_size} bytes<br><br>`;
+                    responseDiv.innerHTML += `<strong>Debug Info:</strong><br>`;
+                    responseDiv.innerHTML += JSON.stringify(result.debug, null, 2);
+                    
+                    // Display the image
+                    if (result.file_exists) {
+                        const img = document.createElement('img');
+                        img.src = result.url;
+                        img.style.maxWidth = '100%';
+                        img.style.marginTop = '20px';
+                        responseDiv.appendChild(img);
+                    }
+                } else {
+                    responseDiv.className = 'error';
+                    responseDiv.textContent = `Error: ${result.message || 'Unknown error'}`;
+                    if (result.debug) {
+                        responseDiv.innerHTML += `<br><br><strong>Debug Info:</strong><br>${JSON.stringify(result.debug, null, 2)}`;
+                    }
+                }
+            } catch (error) {
+                responseDiv.className = 'error';
+                responseDiv.textContent = `Error: ${error.message}`;
+            }
+        });
+    </script>
+</body>
+</html>

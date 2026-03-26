@@ -1,0 +1,86 @@
+Project Requirements:
+
+Use Case:
+
+Implement an end2end BookTable application (similar to OpenTable), with the specified feature requirements listed here.
+
+e.g. https://www.opentable.com/region/san-francisco/east-bay-restaurantsLinks to an external site.
+
+The emphasis here is on team collaboration. Every team member is expected to contribute to all aspects of the Project.
+
+Components
+APIs - input and output of API should be in JSON and should include error handling and validation of inputs
+APIs will be demonstrated using a Web/mobile UI
+UI is accessed by Customer, RestaurantManager, Admin -  (3 roles)
+APIs should support following functionality:
+For all Customers:
+Search for restaurants by Date, Time, #people, and optionally by City/State or Zip code
+Display a list of restaurants that have availability at the specified time +/- 30minutes - with Name, Cuisine type, Cost rating, Reviews and Ratings, and #of times booked today, display clickable buttons with available times - that can be clicked to book the table
+View Restaurant Reviews
+View Restaurant location on Google Maps
+Register/Login
+Book a table - receive confirmation email or confirmation SMS
+Cancel a booking
+For RestaurantManager:
+Add a new listing
+Add/Update name, address, contact info, Hours, Available booking times, table sizes
+Add/update descriptions, photos
+Login as RestaurantManager (Assume manual registration process)
+For Admins :
+Remove Restaurants
+Approve new restaurants to be included
+View Analytics Dashboard of Reservations for the last month
+APIs and UI functionality will be available based on Roles specified above
+Deploy API and Database to AWS or another cloud provider in an Auto Scaled EC2 Cluster with Load Balancer
+Develop a Web or mobile UI that will call the deployed APIs
+Create your own database with mock data for restaurant listings, Customers and RestaurantManagers
+Requirements:
+
+Each team member must own at least one of the Software components in the Team project.
+Keep a Project Journal on GitHub to include the following:
+Weekly Scrum Report (i.e. weekly version of daily scrum) which answers the three daily stand-up questions:
+What tasks did I work on / complete?
+What am I planning to work on next?
+What tasks are blocked waiting on another team member?
+Select two of the following XP Core Values and summarize how the team followed these values throughout the project:
+Communication
+Simplicity
+Feedback
+Courage
+Respect
+Maintain Scrum Backlog for each sprint (use a Google sheet or show links or screenshots if you are using a tool for this)
+Update the Story on your Task Board
+Track your Team's Burndown Chart in this Sheet.
+Maintain the project artifacts and code in an assigned Team GitHub Repo (Use the Git classroom invite to create a private repo - one per team)
+Create UI Wireframes
+Create UI wireframes for each of the screens in your team’s solution
+(this can be done by hand or electronically with a tool like “Pencil”)
+Create Component diagram for overall architecture and Deployment diagram
+Recommendation:  Use UML Deployment/Component Diagram Notation.
+http://agilemodeling.com/artifacts/deploymentDiagram.htm (Links to an external site.)Links to an external site.
+http://agilemodeling.com/artifacts/componentDiagram.htm (Links to an external site.)Links to an external site.
+Maintain a README  file in the Team's GitHub Repo.
+Include all Diagrams, Design decisions and the overall Feature Set of the project
+Project Demo
+Give a demo of your teams working prototype on "Demo Day"
+Grading:
+Teams will be be graded with a Team Score during Demo Day.
+100 points
+Individual deductions will be made to the Team Score based on contributions to be judged by:
+Completeness and Functioning Demo of your Component (as noted on Demo Day)
+Frequency and Quality of commits to the project Github. 
+As such, it is expected that all contributions must be visible via Github.  See the following guidelines for how GitHub counts contributions:  https://help.github.com/articles/why-are-my-contributions-not-showing-up-on-my-profile/ (Links to an external site.)Links to an external site.
+Rubric:
+
+Implementation of requirements (working software): 70%
+
+Component, Deployment diagrams, Agile Scrum Process  (includes Weekly commits and submitting Sprint artifacts, XP values): 30%
+
+Github insights - Each member is expected to checkin code to github; significantly lesser code contributions will result in individual deductions
+
+No submission required on Canvas. Please include the following information in the Readme section of the repo:
+Your Team Name
+The names of each team member
+A summary of areas of contributions (for each team member)
+Link to your team's Project Journal (on GitHub)
+Link to your team's Google Sheet or Project Board - showing Product Backlog and Sprint Backlog for each Sprint

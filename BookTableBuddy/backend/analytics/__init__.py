@@ -1,0 +1,1 @@
+# Initialize the analytics app

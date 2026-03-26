@@ -1,0 +1,1024 @@
+{
+	"info": {
+		"_postman_id": "b2a47c8e-2d33-4e6c-89da-2fd5c9c25dae",
+		"name": "BookTable API",
+		"description": "A collection for testing the BookTable restaurant reservation system API endpoints.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"admin\",\n    \"password\": \"your_password\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/users/login/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"users",
+								"login",
+								""
+							]
+						},
+						"description": "Login and obtain JWT tokens for authentication"
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"newuser\",\n    \"email\": \"newuser@example.com\",\n    \"password\": \"securepassword123\",\n    \"first_name\": \"New\",\n    \"last_name\": \"User\",\n    \"role\": \"customer\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/users/register/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"users",
+								"register",
+								""
+							]
+						},
+						"description": "Register a new user account"
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"refresh\": \"your_refresh_token_here\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/users/refresh/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"users",
+								"refresh",
+								""
+							]
+						},
+						"description": "Get a new access token using refresh token"
+					},
+					"response": []
+				},
+				{
+					"name": "User Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/users/profile/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"users",
+								"profile",
+								""
+							]
+						},
+						"description": "Get the currently authenticated user's profile"
+					},
+					"response": []
+				},
+				{
+					"name": "List Users (Admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/users/list/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"users",
+								"list",
+								""
+							]
+						},
+						"description": "List all users (admin only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Change User Role (Admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"role\": \"restaurant_manager\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/users/change-role/2/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"users",
+								"change-role",
+								"2",
+								""
+							]
+						},
+						"description": "Change a user's role (admin only)"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints for user authentication and account management"
+		},
+		{
+			"name": "Restaurants",
+			"item": [
+				{
+					"name": "List Restaurants",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/restaurants/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"restaurants",
+								""
+							]
+						},
+						"description": "Get a list of all restaurants"
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurant Details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/restaurants/1/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"restaurants",
+								"1",
+								""
+							]
+						},
+						"description": "Get detailed information for a specific restaurant"
+					},
+					"response": []
+				},
+				{
+					"name": "Search Restaurants",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/restaurants/search/?city=New York&cuisine=italian",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"restaurants",
+								"search",
+								""
+							],
+							"query": [
+								{
+									"key": "city",
+									"value": "New York"
+								},
+								{
+									"key": "cuisine",
+									"value": "italian"
+								}
+							]
+						},
+						"description": "Search for restaurants by various criteria"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Restaurant",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Italian Delight\",\n    \"description\": \"Authentic Italian cuisine in a cozy atmosphere\",\n    \"address\": \"123 Main St\",\n    \"city\": \"New York\",\n    \"state\": \"NY\",\n    \"zip_code\": \"10001\",\n    \"phone\": \"212-555-1234\",\n    \"email\": \"info@italiandelight.com\",\n    \"website\": \"https://italiandelight.com\",\n    \"cuisine\": [1],\n    \"cost_rating\": 2,\n    \"hours\": [\n        {\"day\": 0, \"opening_time\": \"11:00:00\", \"closing_time\": \"22:00:00\"},\n        {\"day\": 1, \"opening_time\": \"11:00:00\", \"closing_time\": \"22:00:00\"},\n        {\"day\": 2, \"opening_time\": \"11:00:00\", \"closing_time\": \"22:00:00\"},\n        {\"day\": 3, \"opening_time\": \"11:00:00\", \"closing_time\": \"22:00:00\"},\n        {\"day\": 4, \"opening_time\": \"11:00:00\", \"closing_time\": \"23:00:00\"},\n        {\"day\": 5, \"opening_time\": \"11:00:00\", \"closing_time\": \"23:00:00\"},\n        {\"day\": 6, \"opening_time\": \"12:00:00\", \"closing_time\": \"21:00:00\"}\n    ],\n    \"tables\": [\n        {\"table_number\": \"A1\", \"capacity\": 2},\n        {\"table_number\": \"A2\", \"capacity\": 2},\n        {\"table_number\": \"B1\", \"capacity\": 4},\n        {\"table_number\": \"B2\", \"capacity\": 4},\n        {\"table_number\": \"C1\", \"capacity\": 6}\n    ],\n    \"photos\": [\n        {\"image_url\": \"https://example.com/photo1.jpg\", \"caption\": \"Restaurant Front\", \"is_primary\": true},\n        {\"image_url\": \"https://example.com/photo2.jpg\", \"caption\": \"Dining Area\", \"is_primary\": false}\n    ]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/restaurants/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"restaurants",
+								""
+							]
+						},
+						"description": "Create a new restaurant (requires manager permissions)"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Restaurant",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Italian Delight & Wine Bar\",\n    \"description\": \"Authentic Italian cuisine in a cozy atmosphere with an extensive wine selection\",\n    \"address\": \"123 Main St\",\n    \"city\": \"New York\",\n    \"state\": \"NY\",\n    \"zip_code\": \"10001\",\n    \"phone\": \"212-555-1234\",\n    \"email\": \"info@italiandelight.com\",\n    \"website\": \"https://italiandelight.com\",\n    \"cuisine\": [1],\n    \"cost_rating\": 3\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/restaurants/1/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"restaurants",
+								"1",
+								""
+							]
+						},
+						"description": "Update restaurant information (requires manager permissions)"
+					},
+					"response": []
+				},
+				{
+					"name": "Add Restaurant Review",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"rating\": 5,\n    \"comment\": \"Excellent food and service! Will definitely be back.\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/restaurants/1/reviews/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"restaurants",
+								"1",
+								"reviews",
+								""
+							]
+						},
+						"description": "Add a review for a restaurant"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Available Time Slots",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/restaurants/available-times/1/?date=2025-05-01&party_size=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"restaurants",
+								"available-times",
+								"1",
+								""
+							],
+							"query": [
+								{
+									"key": "date",
+									"value": "2025-05-01"
+								},
+								{
+									"key": "party_size",
+									"value": "2"
+								}
+							]
+						},
+						"description": "Get available time slots for a restaurant on a specific date"
+					},
+					"response": []
+				},
+				{
+					"name": "List Cuisines",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/restaurants/cuisines/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"restaurants",
+								"cuisines",
+								""
+							]
+						},
+						"description": "Get a list of all cuisine types"
+					},
+					"response": []
+				},
+				{
+					"name": "My Restaurants (Manager)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/restaurants/my-restaurants/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"restaurants",
+								"my-restaurants",
+								""
+							]
+						},
+						"description": "Get restaurants managed by the current user"
+					},
+					"response": []
+				},
+				{
+					"name": "Pending Approval Restaurants (Admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/restaurants/pending-approval/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"restaurants",
+								"pending-approval",
+								""
+							]
+						},
+						"description": "Get restaurants pending approval (admin only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Approve Restaurant (Admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"approval_status\": \"approved\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/restaurants/approve/1/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"restaurants",
+								"approve",
+								"1",
+								""
+							]
+						},
+						"description": "Approve or reject a restaurant (admin only)"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints for restaurant management and search"
+		},
+		{
+			"name": "Bookings",
+			"item": [
+				{
+					"name": "Create Booking",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"restaurant_id\": 1,\n    \"date\": \"2025-05-01\",\n    \"time\": \"19:00:00\",\n    \"party_size\": 2,\n    \"special_requests\": \"Window seat if possible\",\n    \"contact_name\": \"John Doe\",\n    \"contact_email\": \"john@example.com\",\n    \"contact_phone\": \"555-123-4567\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/bookings/create/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"bookings",
+								"create",
+								""
+							]
+						},
+						"description": "Create a new restaurant booking"
+					},
+					"response": []
+				},
+				{
+					"name": "My Bookings",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/bookings/my-bookings/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"bookings",
+								"my-bookings",
+								""
+							]
+						},
+						"description": "Get all bookings for current user"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Booking Details",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/bookings/1/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"bookings",
+								"1",
+								""
+							]
+						},
+						"description": "Get details for a specific booking"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Booking",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"date\": \"2025-05-02\",\n    \"time\": \"20:00:00\",\n    \"party_size\": 3,\n    \"special_requests\": \"Booth seating preferred\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/bookings/1/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"bookings",
+								"1",
+								""
+							]
+						},
+						"description": "Update a booking"
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Booking",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"cancelled\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/bookings/cancel/1/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"bookings",
+								"cancel",
+								"1",
+								""
+							]
+						},
+						"description": "Cancel a booking"
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurant Bookings",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/bookings/restaurant/1/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"bookings",
+								"restaurant",
+								"1",
+								""
+							]
+						},
+						"description": "Get all bookings for a restaurant (requires manager permissions)"
+					},
+					"response": []
+				},
+				{
+					"name": "Today's Bookings",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/bookings/today/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"bookings",
+								"today",
+								""
+							]
+						},
+						"description": "Get all bookings for today (for restaurant managers)"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints for managing restaurant bookings"
+		},
+		{
+			"name": "Analytics",
+			"item": [
+				{
+					"name": "Booking Analytics",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/analytics/bookings/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"analytics",
+								"bookings",
+								""
+							]
+						},
+						"description": "Get booking analytics (admin only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurant Analytics",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/analytics/restaurant/1/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"analytics",
+								"restaurant",
+								"1",
+								""
+							]
+						},
+						"description": "Get analytics for a specific restaurant (requires manager permissions)"
+					},
+					"response": []
+				},
+				{
+					"name": "System Stats",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/analytics/system/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"analytics",
+								"system",
+								""
+							]
+						},
+						"description": "Get system-wide statistics (admin only)"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints for analytics and reporting"
+		},
+		{
+			"name": "API Index",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						""
+					]
+				},
+				"description": "Get API documentation and available endpoints"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Auto-save tokens from login response",
+					"if (pm.response.code === 200 && pm.request.url.toString().includes('/api/users/login/')) {",
+					"    var jsonData = pm.response.json();",
+					"    if (jsonData.access) {",
+					"        pm.environment.set('access_token', jsonData.access);",
+					"    }",
+					"    if (jsonData.refresh) {",
+					"        pm.environment.set('refresh_token', jsonData.refresh);",
+					"    }",
+					"}"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000"
+		}
+	]
+}
