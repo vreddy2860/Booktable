@@ -1,5 +1,3 @@
-Team Titans
-
 Members:
 - Vijaya Sharavan Reddy Baddam
 - Divyasri Lakshmi Alekhya Nakka
