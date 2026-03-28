@@ -1,10 +1,9 @@
 Team Titans
 
 Members:
-- Pooja Sindham
+- Vijaya Sharavan Reddy Baddam
 - Divyasri Lakshmi Alekhya Nakka
-- Viswa Kumar Suvvada
-- Teja Mareddy
+- Jayanth Sai Yarlagadda
 
 # BookTableBuddy
 
